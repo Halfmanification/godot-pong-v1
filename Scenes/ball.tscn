@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://cagwmpy6ncpnp"]
+
+[ext_resource type="Texture2D" uid="uid://fmcb4mchieuv" path="res://textures/ball.png" id="1_0qs02"]
+[ext_resource type="Script" path="res://Scenes/ball.gd" id="1_vgnsa"]
+[ext_resource type="AudioStream" uid="uid://dh3ybja1nyt33" path="res://Sounds/ping-pong-ball-100074.wav" id="2_0wvhe"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_q1yif"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_m2cop"]
+radius = 25.02
+
+[node name="Ball" type="RigidBody2D"]
+collision_mask = 11
+mass = 0.01
+physics_material_override = SubResource("PhysicsMaterial_q1yif")
+gravity_scale = 0.0
+max_contacts_reported = 1
+contact_monitor = true
+linear_velocity = Vector2(-499, -400)
+linear_damp = 0.1
+script = ExtResource("1_vgnsa")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_0qs02")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_m2cop")
+
+[node name="HitSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_0wvhe")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_shape_entered" from="." to="." method="_on_body_shape_entered"]
